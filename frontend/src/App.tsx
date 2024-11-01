@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import logo from './assets/images/logo-universal.png';
 import './App.css';
-import { Greet, GetESLfattoriale } from "../wailsjs/go/main/App";
+import { Greet, GetESLSimple, GetESLEvolute } from "../wailsjs/go/main/App";
 
 function App() {
     const [resultText, setResultText] = useState("Please enter your name below 👇");
@@ -25,7 +25,7 @@ function App() {
     }
 
     function getESL() {
-        GetESLfattoriale(rsl,fa,fb,fc,fd,fe,ff,fb).then(updateEsl);
+        GetESLSimple(rsl,fa,fb,fc,fd,fe,ff,fb).then(updateEsl);
     }
 
     return (
