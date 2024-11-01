@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"durability-go/factorial"
 	"fmt"
 )
 
@@ -24,4 +25,12 @@ func (a *App) startup(ctx context.Context) {
 // Greet returns a greeting for the given name
 func (a *App) Greet(name string) string {
 	return fmt.Sprintf("Hello %s, It's show time!", name)
+}
+
+// Greet returns a greeting for the given name
+func (a *App) GetESLfattoriale(rsl float64, fa float64, fb float64, fc float64, fd float64, fe float64, ff float64, fg float64) float64 {
+	fat := factorial.NewFattoriale()
+	fat.SetFactors(fa, fb, fc, fd, fe, ff, fg)
+	fat.SetRSL(rsl)
+	return fat.GetESL()
 }
