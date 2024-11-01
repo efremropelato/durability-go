@@ -143,6 +143,7 @@ func (f *Factor) setValues(arg1, arg2, arg3 float64, N, M int) {
 }
 
 // Getter methods
+func (f *Factor) GetAllValues() [][]float64       { return f.Values }
 func (f *Factor) GetValues(i int) []float64       { return f.Values[i] }
 func (f *Factor) GetMean() []float64              { return f.Mean }
 func (f *Factor) GetMax() []float64               { return f.Max }
