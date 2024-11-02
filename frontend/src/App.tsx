@@ -1,9 +1,23 @@
-import { Button } from "@/components/ui/button"
-import { useEffect, useState } from "react"
-import logo from './assets/logo-universal.png';
-import Layout from "./layout"
+import { useState, useEffect } from 'react'
 import { GetESLSimple } from "../wailsjs/go/main/App";
 // GetESLEvolute
+
+// import reactLogo from './assets/react.svg'
+// import viteLogo from '/vite.svg'
+
+import './App.css'
+
+import Layout from './Layout'
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card"
+import { Button } from "@/components/ui/button"
+
 
 function App() {
   const [rsl, setRsl] = useState(100);
@@ -29,17 +43,17 @@ function App() {
     GetESLSimple(rsl, fa, fb, fc, fd, fe, ff, fg).then(updateEsl);
   }
 
-  useEffect(getESL,[rsl,fa,fb,fc,fd,fe,ff,fg])
-
+  useEffect(getESL, [rsl, fa, fb, fc, fd, fe, ff, fg])
 
   return (
-    <div className="min-h-screen bg-white grid place-items-center mx-auto py-8">
-      <Layout>
-        <div className="text-blue-900 text-2xl font-bold flex flex-col items-center space-y-4">
-          <h1>Vite + React + TS + Tailwind + shadcn/ui</h1>
-          <img src={logo} id="logo" alt="logo" style={{ display: 'block', width: '20%', height: '20%' }} />
-          <div id="result" className="result">{rsl}*{fa}*{fb}*{fc}*{fd}*{fe}*{ff}*{fg} = {esl}</div>
-          <div id="input" className="input-box">
+    <Layout>
+      <Card>
+        <CardHeader>
+          <CardTitle>Metodo fattoriale semplice</CardTitle>
+          <CardDescription>Card Description</CardDescription>
+        </CardHeader>
+        <CardContent>
+        <div id="input" className="input-box">
             <input id="rsl" className="input" defaultValue={rsl} onChange={updateRsl} autoComplete="off" name="rsl" type="number" step="1" /><br />
             <input id="fa" className="input" defaultValue={fa} onChange={updateFa} autoComplete="off" name="fa" type="number" min="0.8" max="1.2" step="0.1" /><br />
             <input id="fb" className="input" defaultValue={fb} onChange={updateFb} autoComplete="off" name="fb" type="number" min="0.8" max="1.2" step="0.1" /><br />
@@ -50,9 +64,12 @@ function App() {
             <input id="fg" className="input" defaultValue={fg} onChange={updateFg} autoComplete="off" name="fg" type="number" min="0.8" max="1.2" step="0.1" /><br />
             <Button className="btn" onClick={getESL}>GetESL</Button>
           </div>
-        </div>
-      </Layout>
-    </div>
+        </CardContent>
+        <CardFooter>
+        <div id="result" className="result">{rsl}*{fa}*{fb}*{fc}*{fd}*{fe}*{ff}*{fg} = {esl}</div>
+        </CardFooter>
+      </Card>
+    </Layout>
   )
 }
 
