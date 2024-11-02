@@ -1,8 +1,22 @@
 package factorial
 
+import "encoding/json"
+
+type EvolutaESL struct {
+	Mean              float64
+	Max               float64
+	Min               float64
+	Median            float64
+	Variance          float64
+	StandardDeviation float64
+	Skewness          float64
+	Values            []float64
+}
+
 type Evolute struct {
 	A, B, C, D, E, F, G *Factor
 	RSL                 float64
+	ESL                 *EvolutaESL
 }
 
 var N, M int
@@ -54,6 +68,31 @@ func (e *Evolute) SetRSL(rsl float64) {
 	e.RSL = rsl
 }
 
+func (e *Evolute) SetESL() {
+	e.ESL = &EvolutaESL{}
+	facA := e.GetA().GetValues(0)
+	facB := e.GetB().GetValues(0)
+	facC := e.GetC().GetValues(0)
+	facD := e.GetD().GetValues(0)
+	facE := e.GetE().GetValues(0)
+	facF := e.GetF().GetValues(0)
+	facG := e.GetG().GetValues(0)
+
+	values := make([]float64, N)
+	for in := 0; in < N; in++ {
+		values[in] = e.RSL * facA[in] * facB[in] * facC[in] * facD[in] * facE[in] * facF[in] * facG[in]
+	}
+	e.ESL.Values = values
+
+	e.ESL.Mean = Mean(e.ESL.Values)
+	e.ESL.Max = Max(e.ESL.Values)
+	e.ESL.Min = Min(e.ESL.Values)
+	e.ESL.Median = Median(e.ESL.Values)
+	e.ESL.Variance = Variance(e.ESL.Values)
+	e.ESL.StandardDeviation = StdDev(e.ESL.Values)
+	e.ESL.Skewness = Skewness(e.ESL.Values)
+}
+
 func (e *Evolute) GetA() *Factor {
 	return e.A
 }
@@ -86,31 +125,39 @@ func (e *Evolute) GetRSL() float64 {
 	return e.RSL
 }
 
-type EvolutaESL struct {
-	Mean              float64
-	Max               float64
-	Min               float64
-	Median            float64
-	Variance          float64
-	StandardDeviation float64
-	Skewness          float64
-	Values            []float64
+func (e *Evolute) GetESL() *EvolutaESL {
+	return e.ESL
 }
 
-func (e *EvolutaESL) GetESL(facA, facB, facC, facD, facE, facF, facG []float64, RSL float64, N int) {
-	values := make([]float64, N)
-	for in := 0; in < N; in++ {
-		values[in] = RSL * facA[in] * facB[in] * facC[in] * facD[in] * facE[in] * facF[in] * facG[in]
-	}
-	e.Values = values
+func (e *Evolute) GetEvolute() *Evolute {
+	return e
+}
 
-	// Calcolo delle statistiche
-	e.Mean = Mean(e.Values)
-	e.Max = Max(e.Values)
-	e.Min = Min(e.Values)
-	e.Median = Median(e.Values)
-	e.Variance = Variance(e.Values)
-	e.StandardDeviation = StdDev(e.Values)
-	e.Skewness = Skewness(e.Values)
+type EvoluteResp struct {
+	FactorA Factor     `json:"a"`
+	FactorB Factor     `json:"b"`
+	FactorC Factor     `json:"c"`
+	FactorD Factor     `json:"d"`
+	FactorE Factor     `json:"e"`
+	FactorF Factor     `json:"f"`
+	FactorG Factor     `json:"g"`
+	RSL     float64    `json:"rsl"`
+	ESL     EvolutaESL `json:"esl"`
+}
 
+func (e *Evolute) GetEvoluteJson() []byte {
+
+	dd := EvoluteResp{}
+	dd.FactorA = *e.GetA()
+	dd.FactorB = *e.GetB()
+	dd.FactorC = *e.GetC()
+	dd.FactorD = *e.GetD()
+	dd.FactorE = *e.GetE()
+	dd.FactorF = *e.GetF()
+	dd.FactorG = *e.GetG()
+	dd.RSL = e.GetRSL()
+	dd.ESL = *e.GetESL()
+	jsonResp, _ := json.Marshal(dd)
+
+	return jsonResp
 }

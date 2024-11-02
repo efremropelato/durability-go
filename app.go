@@ -3,8 +3,6 @@ package main
 import (
 	"context"
 	"durability-go/factorial"
-	"encoding/json"
-	"fmt"
 )
 
 // App struct
@@ -23,21 +21,11 @@ func (a *App) startup(ctx context.Context) {
 	a.ctx = ctx
 }
 
-// Greet returns a greeting for the given name
-func (a *App) Greet(name string) string {
-	return fmt.Sprintf("Hello %s, It's show time!", name)
-}
-
 func (a *App) GetESLSimple(rsl float64, fa float64, fb float64, fc float64, fd float64, fe float64, ff float64, fg float64) float64 {
 	fat := factorial.NewFattoriale()
 	fat.SetFactors(fa, fb, fc, fd, fe, ff, fg)
 	fat.SetRSL(rsl)
 	return fat.GetESL()
-}
-
-type Resp struct {
-	Factor     factorial.Evolute
-	Estimation factorial.EvolutaESL
 }
 
 func (a *App) GetESLEvolute(rsl float64, iterations int,
@@ -60,20 +48,6 @@ func (a *App) GetESLEvolute(rsl float64, iterations int,
 	evo.SetG(fgt, fg1, fg2, fg3, iterations, 1)
 	evo.SetRSL(rsl)
 
-	esl := factorial.EvolutaESL{}
-	facA := evo.GetA().GetValues(0)
-	facB := evo.GetB().GetValues(0)
-	facC := evo.GetC().GetValues(0)
-	facD := evo.GetD().GetValues(0)
-	facE := evo.GetE().GetValues(0)
-	facF := evo.GetF().GetValues(0)
-	facG := evo.GetG().GetValues(0)
-
-	esl.GetESL(facA, facB, facC, facD, facE, facF, facG, evo.GetRSL(), iterations)
-
-	dd := Resp{}
-	dd.Factor = evo
-	dd.Estimation = esl
-	jsonResp, _ := json.Marshal(dd)
-	return jsonResp
+	evo.SetESL()
+	return evo.GetEvoluteJson()
 }
