@@ -89,14 +89,14 @@ export default function MainGrid() {
         sx={{ mb: (theme) => theme.spacing(2) }}
       >
         <Grid>
-          <TextField id="rsl" defaultValue={rsl} onChange={updateRsl} autoComplete="off" name="rsl" type="number" inputProps={{step:1}} />
-          <TextField id="fa" defaultValue={fa} onChange={updateFa} autoComplete="off" name="fa" type="number" inputProps={{min: 0.8, max:1.2, step:0.1}} />
-          <TextField id="fb" defaultValue={fb} onChange={updateFb} autoComplete="off" name="fb" type="number" inputProps={{min: 0.8, max:1.2, step:0.1}} />
-          <TextField id="fc" defaultValue={fc} onChange={updateFc} autoComplete="off" name="fc" type="number" inputProps={{min: 0.8, max:1.2, step:0.1}} />
-          <TextField id="fd" defaultValue={fd} onChange={updateFd} autoComplete="off" name="fd" type="number" inputProps={{min: 0.8, max:1.2, step:0.1}} />
-          <TextField id="fe" defaultValue={fe} onChange={updateFe} autoComplete="off" name="fe" type="number" inputProps={{min: 0.8, max:1.2, step:0.1}} />
-          <TextField id="ff" defaultValue={ff} onChange={updateFf} autoComplete="off" name="ff" type="number" inputProps={{min: 0.8, max:1.2, step:0.1}} />
-          <TextField id="fg" defaultValue={fg} onChange={updateFg} autoComplete="off" name="fg" type="number" inputProps={{min: 0.8, max:1.2, step:0.1}} />
+          <TextField id="rsl" defaultValue={rsl} onChange={updateRsl} autoComplete="off" name="rsl" type="number" slotProps={{htmlInput:{step:1}}}/>
+          <TextField id="fa" defaultValue={fa} onChange={updateFa} autoComplete="off" name="fa" type="number" slotProps={{htmlInput:{min: 0.8, max:1.2, step:0.1}}} />
+          <TextField id="fb" defaultValue={fb} onChange={updateFb} autoComplete="off" name="fb" type="number" slotProps={{htmlInput:{min: 0.8, max:1.2, step:0.1}}} />
+          <TextField id="fc" defaultValue={fc} onChange={updateFc} autoComplete="off" name="fc" type="number" slotProps={{htmlInput:{min: 0.8, max:1.2, step:0.1}}} />
+          <TextField id="fd" defaultValue={fd} onChange={updateFd} autoComplete="off" name="fd" type="number" slotProps={{htmlInput:{min: 0.8, max:1.2, step:0.1}}} />
+          <TextField id="fe" defaultValue={fe} onChange={updateFe} autoComplete="off" name="fe" type="number" slotProps={{htmlInput:{min: 0.8, max:1.2, step:0.1}}} />
+          <TextField id="ff" defaultValue={ff} onChange={updateFf} autoComplete="off" name="ff" type="number" slotProps={{htmlInput:{min: 0.8, max:1.2, step:0.1}}} />
+          <TextField id="fg" defaultValue={fg} onChange={updateFg} autoComplete="off" name="fg" type="number" slotProps={{htmlInput:{min: 0.8, max:1.2, step:0.1}}} />
           <Button onClick={getESL}>GetESL</Button>
           <div id="result" className="result">{rsl}*{fa}*{fb}*{fc}*{fd}*{fe}*{ff}*{fg} = {esl}</div>
         </Grid>
